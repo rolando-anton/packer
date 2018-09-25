@@ -1,0 +1,50 @@
+{
+  "variables": {
+    "vmname": "",
+    "ramsize": ""
+  },
+
+  "builders": [
+    {
+      "type": "vsphere-iso",
+      "vcenter_server": "vcsa.fortilabs.org",
+      "insecure_connection": "true",
+      "username": "administrator@aiur.fortilabs.org",
+      "password": "sup3rp@ss",
+      "cluster": "Nexus",
+      "datacenter": "Aiur",
+      "host": "esx02.fortilabs.org",
+      "vm_name":  "{{user `vmname`}}",
+      "convert_to_template": "false",
+      "CPUs": "4",
+      "CPU_limit": -1,
+      "RAM": "{{user `ramsize`}}",
+      "network": "dc_mgmt",
+      "network_card": "vmxnet3",
+      "guest_os_type": "windows7Server64Guest",
+      "datastore": "vsanDatastore",
+      "disk_controller_type":  "pvscsi",
+      "disk_thin_provisioned": true,
+      "disk_size": "61440",
+      "vm_version": 14,
+      "iso_paths": [
+        "[vsanDatastore] ISOs/en_windows_server_2012_r2_with_update_x64_dvd.iso"
+      ],
+      "communicator": "winrm",
+      "winrm_username": "fortilabs",
+      "winrm_password": "40net123!!",
+      "winrm_insecure": true,
+    "winrm_use_ssl": false,
+
+    "floppy_files": [
+      "./autounattend.xml",
+      "./scripts/setup.ps1",
+      "./scripts/install-7zip.ps1",
+      "./scripts/install-vmware-tools.ps1",
+      "./drivers/vmware/drivers/pvscsi64",
+      "./drivers/vmware/drivers/vmxnet3"
+    ]
+
+    }
+  ]
+}
